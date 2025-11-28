@@ -1,6 +1,8 @@
 import sys
 from pathlib import Path
 import pandas as pd
+import numpy as np
+pd.set_option('display.max_columns', None)
 
 sys.path.append(str(Path(__file__).parent / "src"))
 import avfetch
@@ -11,8 +13,5 @@ spot = avfetch.spot(av_key)
 intraday = avfetch.intraday(av_key, outputsize = 'compact')
 options = avfetch.options(av_key)
 
-spy_link = pd.DataFrame(options.link('2025-11-26','SPY'))
-help(spy_link.to_csv)
-spy_link.to_csv('options_data.csv',index=False)
-
-print(spy_link)
+spy_link = options.from_csv('options_data.csv')
+print(spy_link.dtypes)
