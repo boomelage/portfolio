@@ -13,5 +13,17 @@ spot = avfetch.spot(av_key)
 intraday = avfetch.intraday(av_key, outputsize = 'compact')
 options = avfetch.options(av_key)
 
-spy_link = options.from_csv('options_data.csv')
+spy_link = options.from_csv(str(Path(__file__).parent / "example_data" / "options_data.csv"))
+
 print(spy_link.dtypes)
+
+spy_link = spy_link.sort_values(by=['strike','dtm'],ascending=True)
+
+print(
+	spy_link[
+		(spy_link['strike'] == 500) & 
+		(spy_link['type']=='call')
+	]
+)
+
+print(intraday.equity("IBM"))
