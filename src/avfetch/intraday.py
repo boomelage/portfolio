@@ -15,4 +15,4 @@ class intraday:
         r = requests.get(url).json()
         if verbose:
             print(r)
-        return pd.DataFrame(r['Time Series (5min)'], dtype = float).T['4. close'].rename(symbol)
+        return pd.Series(pd.DataFrame(r['Time Series (5min)'], dtype = float).T['4. close']).rename(symbol)

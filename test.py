@@ -25,5 +25,3 @@ print(
 		(spy_link['type']=='call')
 	]
 )
-
-print(intraday.equity("IBM"))

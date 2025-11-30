@@ -17,7 +17,7 @@ class series:
         r = requests.get(url).json()
         if verbose:
             print(r)
-        return pd.DataFrame(r[f'Time Series FX ({self.frequency})'], dtype = float).T['4. close'].rename(str(from_currency+to_currency))
+        return pd.Series(pd.DataFrame(r[f'Time Series FX ({self.frequency})'], dtype = float).T['4. close']).rename(str(from_currency+to_currency))
     
     def equity(self, symbol: str, verbose = False) -> pd.Series:
         """
@@ -29,9 +29,9 @@ class series:
         if verbose:
             print(r)
         if self.frequency in ["Weekly", "Monthly"]:
-            return pd.DataFrame(r[f'{self.frequency} Adjusted Time Series'], dtype = float).T['5. adjusted close'].rename(symbol)
+            return pd.Series(pd.DataFrame(r[f'{self.frequency} Adjusted Time Series'], dtype = float).T['5. adjusted close']).rename(symbol)
         elif self.frequency == 'Daily':
-            return pd.DataFrame(r[f'Time Series ({self.frequency})'], dtype = float).T['5. adjusted close'].rename(symbol)
+            return pd.Series(pd.DataFrame(r[f'Time Series ({self.frequency})'], dtype = float).T['5. adjusted close']).rename(symbol)
         else:
             raise NotImplementedError("Frequency might not exist. Check https://www.alphavantage.co/documentation/")
 
@@ -44,4 +44,4 @@ class series:
         r = requests.get(url).json()
         if verbose:
             print(r)
-        return pd.DataFrame(r[f'Time Series (Digital Currency {self.frequency})'], dtype = float).T['4. close'].rename(str(symbol+market))
+        return pd.Series(pd.DataFrame(r[f'Time Series (Digital Currency {self.frequency})'], dtype = float).T['4. close']).rename(str(symbol+market))
